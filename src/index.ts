@@ -1,14 +1,9 @@
 import express, { Response, Request, NextFunction } from "express";
 import dotenv from "dotenv";
-import cors from "cors";
-import bodyParser from "body-parser";
 import { usersRouter } from "../routes/public/users.route.js";
 import { db } from "../config/database/mongo.database.js";
-import {
-  fetchPokemonData,
-  fetchRickAndMortyData,
-  fetchTranslationData,
-} from "../config/api/index.js";
+import { middlewaresFunc } from "../middlewares/index.js";
+import { vipRouter } from "../routes/private/vip.route.js";
 
 // server
 dotenv.config();
@@ -16,23 +11,16 @@ const port = process.env.PORT;
 const server = express();
 
 // middlewares
-server.use(express.json());
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(cors());
+middlewaresFunc(server);
 
 // public routes
 server.use("/", usersRouter);
 
 // private routes
-server.use("/private", (req: Request, res: Response) => {
-  res.send("Esta é uma rota privada! Saia imediatamente!");
-});
+server.use("/", vipRouter);
 
 // listen server
 server.listen(port, () => {
   db();
-  fetchPokemonData();
-  fetchRickAndMortyData();
-  fetchTranslationData();
   console.log(`Servidor rodando na porta ${port}`);
 });

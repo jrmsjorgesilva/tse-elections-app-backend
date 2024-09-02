@@ -49,3 +49,9 @@ export const fetchTranslationData = async () => {
     );
   }
 };
+
+export const fetchAll = async () => {
+  fetchPokemonData();
+  fetchRickAndMortyData();
+  fetchTranslationData();
+};
