@@ -7,8 +7,8 @@ const endPointZona = `https://apps.tre-rj.jus.br/api-dados-abertos/zonas`;
 export const fetchZona = async () => {
   try {
     const result = await axios.get(endPointZona).then((res) => res.data);
-    console.log("resultado: ", result);
-    return [...result];
+    // console.log("resultado: ", ...result);
+    return result;
   } catch (err) {
     console.error(err);
     console.log("Não foi possível buscar dados da API devido a erro");
@@ -33,8 +33,8 @@ export const getZonas = async (_: Request, res: Response) => {
 export const addZona = async (req: Request, res: Response) => {
   try {
     const newZonas = fetchZona();
-    console.log("Zonas->>> ", newZonas)
-    const result = await Zona.create(newZonas);
+    console.log("Zonas->>> ", { ...newZonas });
+    const result = await Zona.create({ ...newZonas });
     return res
       .status(201)
       .json({ msg: `Zona elitoral inserida com sucesso: `, result });

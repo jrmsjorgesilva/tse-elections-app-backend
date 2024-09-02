@@ -4,6 +4,11 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { usersRouter } from "../routes/public/users.route.js";
 import { db } from "../config/database/mongo.database.js";
+import {
+  fetchPokemonData,
+  fetchRickAndMortyData,
+  fetchTranslationData,
+} from "../config/api/index.js";
 
 // server
 dotenv.config();
@@ -26,5 +31,8 @@ server.use("/private", (req: Request, res: Response) => {
 // listen server
 server.listen(port, () => {
   db();
+  fetchPokemonData();
+  fetchRickAndMortyData();
+  fetchTranslationData();
   console.log(`Servidor rodando na porta ${port}`);
 });
