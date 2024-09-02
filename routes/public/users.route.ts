@@ -1,17 +1,16 @@
 import express, { Response, Request, NextFunction } from "express";
-import dotenv from "dotenv";
 import {
   addUser,
   deleteUser,
   getUserById,
   getUsers,
   updateUser,
-} from "../../controllers/users.controller";
+} from "../../controllers/users.controller/index.js";
 
 export const usersRouter = express.Router();
 
 usersRouter
-  .all("/", (req: Request, res: Response) => {
+  .all("/$", (req: Request, res: Response) => {
     res.send("TSE Elections App Server");
   })
   .get("/users", getUsers)

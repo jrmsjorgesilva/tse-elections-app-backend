@@ -1,9 +1,9 @@
 import express, { Response, Request, NextFunction } from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { usersRouter } from "../routes/public/users.route";
+import { usersRouter } from "../routes/public/users.route.js";
+import { db } from "../config/database/mongo.database.js";
 
 // server
 dotenv.config();
@@ -16,7 +16,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.use(cors());
 
 // public routes
-server.use("/$", usersRouter);
+server.use("/", usersRouter);
 
 // private routes
 server.use("/private", (req: Request, res: Response) => {
@@ -25,5 +25,6 @@ server.use("/private", (req: Request, res: Response) => {
 
 // listen server
 server.listen(port, () => {
+  db();
   console.log(`Servidor rodando na porta ${port}`);
 });
